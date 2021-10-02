@@ -14,6 +14,9 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^7.1.0",
+    "@graphql-tools/load": "^7.3.2",
+    "@graphql-tools/schema": "^8.2.0",
     "apollo-server": "^3.3.0",
     "graphql": "^15.6.0"
   },
