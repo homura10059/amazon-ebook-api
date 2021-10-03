@@ -11,6 +11,7 @@
     "start": "cp schema.graphql dist/ && node dist/src/index.js",
     "format": "prettier --write $PWD/'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*.{js,ts}'",
+    "lint:fix": "yarn lint --fix",
     "clean": "rm -rf dist",
     "graphql:codegen": "graphql-codegen --config codegen.yml",
     "prisma:studio": "prisma studio",
