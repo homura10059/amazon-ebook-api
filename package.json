@@ -8,11 +8,14 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js",
+    "start": "cp schema.graphql dist/ && node dist/src/index.js",
     "format": "prettier --write $PWD/'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*.{js,ts}'",
-    "codegen": "graphql-codegen --config codegen.yml",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "graphql:codegen": "graphql-codegen --config codegen.yml",
+    "prisma:studio": "prisma studio",
+    "prisma:generate": "prisma generate",
+    "prisma:deploy": "prisma migrate deploy"
   },
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^7.1.0",
@@ -20,7 +23,9 @@
     "@graphql-tools/schema": "^8.2.0",
     "@prisma/client": "^3.1.1",
     "apollo-server": "^3.3.0",
+    "dotenv": "^10.0.0",
     "graphql": "^15.6.0",
+    "next-auth": "^3.29.0",
     "prisma": "3.1.1"
   },
   "devDependencies": {
