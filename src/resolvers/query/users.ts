@@ -7,7 +7,7 @@ const users: QueryResolver['users'] = async () => {
     .from<definitions['users']>('users')
     .select('*')
 
-  if (error) return []
+  if (error) throw error
   return users
 }
 
