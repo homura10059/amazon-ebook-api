@@ -4,6 +4,7 @@ import { addResolversToSchema } from '@graphql-tools/schema'
 import { ApolloServer } from 'apollo-server'
 import { join } from 'path'
 
+import { APOLLO_SERVER_PORT } from './lib/constsnts'
 import resolvers from './resolvers'
 
 const schema = loadSchemaSync(join(__dirname, '../schema.graphql'), {
@@ -15,6 +16,6 @@ const server = new ApolloServer({
   schema: schemaWithResolvers
 })
 
-server.listen().then(({ url }) => {
+server.listen({ port: APOLLO_SERVER_PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
 })
