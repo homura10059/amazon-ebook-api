@@ -16,20 +16,16 @@
     "lint:fix": "yarn lint --fix",
     "clean": "rm -rf dist",
     "graphql:codegen": "graphql-codegen --config codegen.yml",
-    "prisma:studio": "prisma studio",
-    "prisma:generate": "prisma generate",
-    "prisma:deploy": "prisma migrate deploy"
+    "supabase:codegen": "source ./.env && openapi-typescript \"$SUPABASE_URL/rest/v1/?apikey=$SUPABASE_KEY\" --output src/types/supabase.ts"
   },
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^7.1.0",
     "@graphql-tools/load": "^7.3.2",
     "@graphql-tools/schema": "^8.2.0",
-    "@prisma/client": "^3.1.1",
+    "@supabase/supabase-js": "^1.24.0",
     "apollo-server": "^3.3.0",
     "dotenv": "^10.0.0",
-    "graphql": "^15.6.0",
-    "next-auth": "^3.29.0",
-    "prisma": "3.1.1"
+    "graphql": "^15.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.0",
@@ -42,6 +38,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "npm-run-all": "^4.1.5",
+    "openapi-typescript": "^4.4.0",
     "prettier": "^2.3.2",
     "ts-node": "^10.1.0",
     "ts-node-dev": "^1.1.8",

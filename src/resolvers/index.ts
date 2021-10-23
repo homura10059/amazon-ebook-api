@@ -1,15 +1,10 @@
 import { Resolvers } from '../types/generated/graphql'
+// import Mutation from './mutation'
 import Query from './query'
 
 const resolvers: Resolvers = {
   Query
-  // Mutation: {
-  //     addTodo: () => null,
-  //     updateTodo: () => null,
-  //     deleteTodo: () => null,
-  //     createUser: createUser,
-  //     updateUser: () => null,
-  // },
+  // Mutation
 }
 
 export default resolvers
