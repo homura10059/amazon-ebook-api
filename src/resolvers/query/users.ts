@@ -11,4 +11,4 @@ const users: QueryResolver['users'] = async () => {
   return users
 }
 
-export default users
+export default { users }

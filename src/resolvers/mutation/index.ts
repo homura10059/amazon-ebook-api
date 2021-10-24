@@ -1,5 +1,7 @@
 import { Resolvers } from '../../types/generated/graphql'
 
-const mutation: Resolvers['Mutation'] = {}
+export type MutationResolver = NonNullable<Resolvers['Mutation']>
+
+const mutation: MutationResolver = {}
 
 export default mutation

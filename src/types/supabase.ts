@@ -12,6 +12,210 @@ export interface paths {
       };
     };
   };
+  "/itemHistories": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.itemHistories.id"];
+          scrapedAt?: parameters["rowFilter.itemHistories.scrapedAt"];
+          itemId?: parameters["rowFilter.itemHistories.itemId"];
+          price?: parameters["rowFilter.itemHistories.price"];
+          discount?: parameters["rowFilter.itemHistories.discount"];
+          discountRate?: parameters["rowFilter.itemHistories.discountRate"];
+          points?: parameters["rowFilter.itemHistories.points"];
+          pointsRate?: parameters["rowFilter.itemHistories.pointsRate"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["itemHistories"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** itemHistories */
+          itemHistories?: definitions["itemHistories"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.itemHistories.id"];
+          scrapedAt?: parameters["rowFilter.itemHistories.scrapedAt"];
+          itemId?: parameters["rowFilter.itemHistories.itemId"];
+          price?: parameters["rowFilter.itemHistories.price"];
+          discount?: parameters["rowFilter.itemHistories.discount"];
+          discountRate?: parameters["rowFilter.itemHistories.discountRate"];
+          points?: parameters["rowFilter.itemHistories.points"];
+          pointsRate?: parameters["rowFilter.itemHistories.pointsRate"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.itemHistories.id"];
+          scrapedAt?: parameters["rowFilter.itemHistories.scrapedAt"];
+          itemId?: parameters["rowFilter.itemHistories.itemId"];
+          price?: parameters["rowFilter.itemHistories.price"];
+          discount?: parameters["rowFilter.itemHistories.discount"];
+          discountRate?: parameters["rowFilter.itemHistories.discountRate"];
+          points?: parameters["rowFilter.itemHistories.points"];
+          pointsRate?: parameters["rowFilter.itemHistories.pointsRate"];
+        };
+        body: {
+          /** itemHistories */
+          itemHistories?: definitions["itemHistories"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/items": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.items.id"];
+          url?: parameters["rowFilter.items.url"];
+          title?: parameters["rowFilter.items.title"];
+          scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["items"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** items */
+          items?: definitions["items"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.items.id"];
+          url?: parameters["rowFilter.items.url"];
+          title?: parameters["rowFilter.items.title"];
+          scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.items.id"];
+          url?: parameters["rowFilter.items.url"];
+          title?: parameters["rowFilter.items.title"];
+          scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+        };
+        body: {
+          /** items */
+          items?: definitions["items"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/users": {
     get: {
       parameters: {
@@ -102,6 +306,282 @@ export interface paths {
       };
     };
   };
+  "/users_to_wishLists": {
+    get: {
+      parameters: {
+        query: {
+          userId?: parameters["rowFilter.users_to_wishLists.userId"];
+          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["users_to_wishLists"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** users_to_wishLists */
+          users_to_wishLists?: definitions["users_to_wishLists"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          userId?: parameters["rowFilter.users_to_wishLists.userId"];
+          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          userId?: parameters["rowFilter.users_to_wishLists.userId"];
+          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+        };
+        body: {
+          /** users_to_wishLists */
+          users_to_wishLists?: definitions["users_to_wishLists"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/wishLists": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.wishLists.id"];
+          url?: parameters["rowFilter.wishLists.url"];
+          scrapedAt?: parameters["rowFilter.wishLists.scrapedAt"];
+          title?: parameters["rowFilter.wishLists.title"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["wishLists"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** wishLists */
+          wishLists?: definitions["wishLists"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.wishLists.id"];
+          url?: parameters["rowFilter.wishLists.url"];
+          scrapedAt?: parameters["rowFilter.wishLists.scrapedAt"];
+          title?: parameters["rowFilter.wishLists.title"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.wishLists.id"];
+          url?: parameters["rowFilter.wishLists.url"];
+          scrapedAt?: parameters["rowFilter.wishLists.scrapedAt"];
+          title?: parameters["rowFilter.wishLists.title"];
+        };
+        body: {
+          /** wishLists */
+          wishLists?: definitions["wishLists"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/wishLists_to_items": {
+    get: {
+      parameters: {
+        query: {
+          wishListId?: parameters["rowFilter.wishLists_to_items.wishListId"];
+          itemId?: parameters["rowFilter.wishLists_to_items.itemId"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["wishLists_to_items"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** wishLists_to_items */
+          wishLists_to_items?: definitions["wishLists_to_items"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          wishListId?: parameters["rowFilter.wishLists_to_items.wishListId"];
+          itemId?: parameters["rowFilter.wishLists_to_items.itemId"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          wishListId?: parameters["rowFilter.wishLists_to_items.wishListId"];
+          itemId?: parameters["rowFilter.wishLists_to_items.itemId"];
+        };
+        body: {
+          /** wishLists_to_items */
+          wishLists_to_items?: definitions["wishLists_to_items"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/rpc/handle_new_user": {
     post: {
       parameters: {
@@ -122,6 +602,34 @@ export interface paths {
 }
 
 export interface definitions {
+  itemHistories: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: string;
+    scrapedAt: number;
+    /**
+     * Note:
+     * This is a Foreign Key to `items.id`.<fk table='items' column='id'/>
+     */
+    itemId: string;
+    price?: number;
+    discount?: number;
+    discountRate?: number;
+    points?: number;
+    pointsRate?: number;
+  };
+  items: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: string;
+    url: string;
+    title?: string;
+    scrapedAt?: number;
+  };
   users: {
     /**
      * Note:
@@ -129,6 +637,44 @@ export interface definitions {
      */
     id: string;
     email?: string;
+  };
+  users_to_wishLists: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `users.id`.<fk table='users' column='id'/>
+     */
+    userId: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `wishLists.id`.<fk table='wishLists' column='id'/>
+     */
+    wishListsId: string;
+  };
+  wishLists: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: string;
+    url: string;
+    scrapedAt?: number;
+    title: string;
+  };
+  wishLists_to_items: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `wishLists.id`.<fk table='wishLists' column='id'/>
+     */
+    wishListId: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `items.id`.<fk table='items' column='id'/>
+     */
+    itemId: string;
   };
 }
 
@@ -153,10 +699,40 @@ export interface parameters {
   offset: string;
   /** Limiting and Pagination */
   limit: string;
+  /** itemHistories */
+  "body.itemHistories": definitions["itemHistories"];
+  "rowFilter.itemHistories.id": string;
+  "rowFilter.itemHistories.scrapedAt": string;
+  "rowFilter.itemHistories.itemId": string;
+  "rowFilter.itemHistories.price": string;
+  "rowFilter.itemHistories.discount": string;
+  "rowFilter.itemHistories.discountRate": string;
+  "rowFilter.itemHistories.points": string;
+  "rowFilter.itemHistories.pointsRate": string;
+  /** items */
+  "body.items": definitions["items"];
+  "rowFilter.items.id": string;
+  "rowFilter.items.url": string;
+  "rowFilter.items.title": string;
+  "rowFilter.items.scrapedAt": string;
   /** users */
   "body.users": definitions["users"];
   "rowFilter.users.id": string;
   "rowFilter.users.email": string;
+  /** users_to_wishLists */
+  "body.users_to_wishLists": definitions["users_to_wishLists"];
+  "rowFilter.users_to_wishLists.userId": string;
+  "rowFilter.users_to_wishLists.wishListsId": string;
+  /** wishLists */
+  "body.wishLists": definitions["wishLists"];
+  "rowFilter.wishLists.id": string;
+  "rowFilter.wishLists.url": string;
+  "rowFilter.wishLists.scrapedAt": string;
+  "rowFilter.wishLists.title": string;
+  /** wishLists_to_items */
+  "body.wishLists_to_items": definitions["wishLists_to_items"];
+  "rowFilter.wishLists_to_items.wishListId": string;
+  "rowFilter.wishLists_to_items.itemId": string;
 }
 
 export interface operations {}

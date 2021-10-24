@@ -6,17 +6,19 @@
   "author": "o-hayato <preasper0+github@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "db:up": "docker-compose up -d",
-    "db:down": "docker-compose down -v",
+    "redis:up": "docker-compose up -d",
+    "redis:down": "docker-compose down -v",
     "dev": "ts-node-dev --respawn src/index.ts",
+    "dev:worker": "ts-node-dev --respawn src/worker.ts",
     "build": "tsc -p tsconfig.json",
     "start": "cp schema.graphql dist/ && node dist/index.js",
+    "worker:start": "node dist/worker.js",
     "format": "prettier --write $PWD/'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "lint:fix": "yarn lint --fix",
     "clean": "rm -rf dist",
     "graphql:codegen": "graphql-codegen --config codegen.yml",
-    "supabase:codegen": "source ./.env && openapi-typescript \"$SUPABASE_URL/rest/v1/?apikey=$SUPABASE_KEY\" --output src/types/supabase.ts"
+    "supabase:codegen": "source ./.env && openapi-typescript \"$SUPABASE_URL/rest/v1/?apikey=$SERVICE_KEY\" --output src/types/supabase.ts"
   },
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^7.1.0",
@@ -24,13 +26,17 @@
     "@graphql-tools/schema": "^8.2.0",
     "@supabase/supabase-js": "^1.24.0",
     "apollo-server": "^3.3.0",
+    "bull": "^3.29.3",
     "dotenv": "^10.0.0",
-    "graphql": "^15.6.0"
+    "graphql": "^15.6.0",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.0",
     "@graphql-codegen/typescript": "^2.2.2",
     "@graphql-codegen/typescript-resolvers": "^2.2.1",
+    "@types/bull": "^3.15.5",
+    "@types/throng": "^5.0.3",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "eslint": "^7.32.0",

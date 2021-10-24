@@ -1,16 +1,23 @@
 type Query {
-    users: [User!]
+    users: [User]
+    scanAllItems: Queued
+    job(id: String!): Job
 }
 
 #type Mutation {
-#    addTodo(input: AddTodoInput):
-#    updateTodo(id: Int, input: UpdateTodoInput):
-#    deleteTodo(id: Int):
-#    createUser(id: String, input: UserInput): User
-#    updateUser(id: String, input: UserInput): User
 #}
 
 type User {
-    id: String
+    id: String!
 }
 
+type Queued {
+    jobId: String!
+}
+
+type Job {
+    id: String!
+    state: String!
+    progress: String!
+    failedReason: String
+}
