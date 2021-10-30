@@ -22,10 +22,20 @@ export type Job = {
   state: Scalars['String'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  scanAllItems?: Maybe<Queued>;
+  scanItem?: Maybe<Queued>;
+};
+
+
+export type MutationScanItemArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   job?: Maybe<Job>;
-  scanAllItems?: Maybe<Queued>;
   users?: Maybe<Array<Maybe<User>>>;
 };
 
@@ -116,6 +126,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Job: ResolverTypeWrapper<Job>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Queued: ResolverTypeWrapper<Queued>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -126,6 +137,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Job: Job;
+  Mutation: {};
   Query: {};
   Queued: Queued;
   String: Scalars['String'];
@@ -140,9 +152,13 @@ export type JobResolvers<ContextType = Context, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  scanAllItems?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType>;
+  scanItem?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType, RequireFields<MutationScanItemArgs, 'id'>>;
+}>;
+
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   job?: Resolver<Maybe<ResolversTypes['Job']>, ParentType, ContextType, RequireFields<QueryJobArgs, 'id'>>;
-  scanAllItems?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 }>;
 
@@ -158,6 +174,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Job?: JobResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Queued?: QueuedResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

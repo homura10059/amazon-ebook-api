@@ -2,4 +2,9 @@ type ScanAllItems = {
   type: 'ScanAllItems'
 }
 
-export type JobData = ScanAllItems
+type ScanItem = {
+  type: 'ScanItem'
+  itemId: string
+}
+
+export type JobData = ScanAllItems | ScanItem

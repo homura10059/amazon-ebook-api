@@ -1,11 +1,12 @@
 type Query {
     users: [User]
-    scanAllItems: Queued
     job(id: String!): Job
 }
 
-#type Mutation {
-#}
+type Mutation {
+    scanItem(id: String!): Queued
+    scanAllItems: Queued
+}
 
 type User {
     id: String!
