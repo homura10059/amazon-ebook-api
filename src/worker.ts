@@ -1,6 +1,6 @@
 import throng from 'throng'
 
-import { scanItem } from './domain/services/items'
+import { scanAllItems, scanItem } from './domain/services/items'
 import { queue } from './lib/queue'
 
 const workers = process.env.WEB_CONCURRENCY || 2
@@ -12,6 +12,10 @@ function start() {
     switch (data.type) {
       case 'ScanItem': {
         await scanItem(data.itemId)
+        break
+      }
+      case 'ScanAllItems': {
+        await scanAllItems()
         break
       }
       default: {
