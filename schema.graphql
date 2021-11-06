@@ -6,6 +6,8 @@ type Query {
 type Mutation {
     scanItem(id: String!): Queued
     scanAllItems: Queued
+    scanWishList(id: String!): Queued
+    scanAllWishLists: Queued
 }
 
 type User {

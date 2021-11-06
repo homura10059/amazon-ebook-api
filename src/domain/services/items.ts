@@ -1,3 +1,4 @@
+import { queue } from '../../lib/queue'
 import { supabase } from '../../lib/supabase'
 import { definitions } from '../../types/supabase'
 import { scrapeItem } from '../repositories/items'
@@ -28,11 +29,16 @@ export const updateItem = async (item: { id: string; url: string }) => {
 }
 
 export const scanItem = async (id: string) => {
-  const item = await fetchItem(id)
-  await updateItem(item)
+  try {
+    const item = await fetchItem(id)
+    await updateItem(item)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const scanAllItems = async () => {
+  console.log('scanAllItems')
   const { data: items, error } = await supabase
     .from<definitions['items']>('items')
     .select('*')
@@ -40,5 +46,8 @@ export const scanAllItems = async () => {
   if (error || !items) {
     throw error
   }
-  await Promise.allSettled(items.map(updateItem))
+
+  await Promise.allSettled(
+    items.map(item => queue.add({ type: 'ScanItem', itemId: item.id }))
+  )
 }

@@ -7,4 +7,14 @@ type ScanItem = {
   itemId: string
 }
 
-export type JobData = ScanAllItems | ScanItem
+type ScanAllWishLists = {
+  type: 'ScanAllWishLists'
+}
+
+type ScanWishList = {
+  type: 'ScanWishList'
+  wishListId: string
+}
+
+export type JobData = ScanAllItems | ScanItem | ScanAllWishLists | ScanWishList
+export type JobType = Pick<JobData, 'type'>['type']

@@ -25,11 +25,18 @@ export type Job = {
 export type Mutation = {
   __typename?: 'Mutation';
   scanAllItems?: Maybe<Queued>;
+  scanAllWishLists?: Maybe<Queued>;
   scanItem?: Maybe<Queued>;
+  scanWishList?: Maybe<Queued>;
 };
 
 
 export type MutationScanItemArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationScanWishListArgs = {
   id: Scalars['String'];
 };
 
@@ -154,7 +161,9 @@ export type JobResolvers<ContextType = Context, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   scanAllItems?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType>;
+  scanAllWishLists?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType>;
   scanItem?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType, RequireFields<MutationScanItemArgs, 'id'>>;
+  scanWishList?: Resolver<Maybe<ResolversTypes['Queued']>, ParentType, ContextType, RequireFields<MutationScanWishListArgs, 'id'>>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{

@@ -2,79 +2,72 @@ import { Browser, Page } from 'puppeteer'
 
 import { getUnixTimeInSec } from '../../lib/dates'
 import { getBrowser, getText, scrape } from '../../lib/scraper'
-import {
-  POINTS,
-  POINTS_RATE,
-  PRICE,
-  SAVING,
-  TITLE
-} from '../models/cssSelector'
+import { PRICE, REAL_PRICE, TITLE } from '../models/selector'
 
 const priceRegex = /\d{1,3}(,\d{3})*/
-const percentageRegex = /\d{1,3}/
+const pointsRegex = /\d{1,3}(,\d{3})*pt/
 
-const getPrice = async (page: Page) => {
-  const priceStr = await getText(page, PRICE)
-  const price = priceRegex.exec(priceStr)
-  return price && price.length > 0
-    ? parseInt(price[0].trim().replace(',', ''), 10)
+const isStringArray = (x: unknown[]): x is string[] =>
+  x.every(t => typeof t === 'string')
+
+const convertRegExpExecArrayToNumber = (exp: RegExpExecArray | null) =>
+  exp && exp.length > 0
+    ? parseInt(exp[0].trim().replace(',', ''), 10)
     : undefined
-}
 
-const getSaving = async (page: Page) => {
-  return getText(page, SAVING).then((saving: string) => {
-    const discount = priceRegex.exec(saving)
-    const discountPer = percentageRegex.exec(saving.split('(')[1])
-    return {
-      discount:
-        discount && discount.length > 0
-          ? parseInt(discount[0].trim().replace(',', ''), 10)
-          : undefined,
-      discountRate:
-        discountPer && discountPer.length > 0
-          ? parseInt(discountPer[0], 10)
-          : undefined
+const getPriceAndPoints = async (page: Page, xpath: string) => {
+  try {
+    const elms = await page.$x(xpath)
+    const parents = await Promise.all(elms.map(elm => elm.$x('..')))
+    const handles = await Promise.all(
+      parents.flat().map(x => x.getProperty('textContent'))
+    )
+    const texts = await Promise.all(handles.map(handle => handle.jsonValue()))
+    if (!isStringArray(texts)) {
+      return {
+        price: undefined,
+        points: undefined
+      }
     }
-  })
+    const text = texts.join().trim()
+    const price = priceRegex.exec(text)
+    const points = pointsRegex.exec(text)
+    return {
+      price: convertRegExpExecArrayToNumber(price),
+      points: convertRegExpExecArrayToNumber(points)
+    }
+  } catch (e) {
+    console.log(e)
+    return {
+      price: undefined,
+      points: undefined
+    }
+  }
 }
 
-const getPoints = async (page: Page) => {
-  const pointsStr = await getText(page, POINTS)
-  const points = priceRegex.exec(pointsStr)
-  return points && points.length > 0
-    ? parseInt(points[0].trim().replace(',', ''), 10)
-    : undefined
+const rate = (denominntor?: number, numerator?: number) => {
+  if (!denominntor || !numerator) {
+    return undefined
+  }
+  return Math.round((denominntor / numerator) * 100)
 }
-
-const getPointsRate = async (page: Page) =>
-  getText(page, POINTS_RATE)
-    .then((pointsPerStr: string) => {
-      const surrounded = pointsPerStr.split('(')
-      const pointsPer =
-        surrounded && surrounded.length > 1
-          ? surrounded[1].split(')')
-          : undefined
-      return pointsPer && pointsPer.length > 0 ? pointsPer[0] : ''
-    })
-    .then((pointsPerStr: string) => {
-      const pointsPer = percentageRegex.exec(pointsPerStr)
-      return pointsPer && pointsPer.length > 0
-        ? parseInt(pointsPer[0], 10)
-        : undefined
-    })
 
 export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
   const page = await scrape(browser, url)
   const scrapedAt = getUnixTimeInSec(new Date(Date.now()))
 
-  const saving = await getSaving(page)
+  const { price, points } = await getPriceAndPoints(page, PRICE)
+  const { price: realPrice } = await getPriceAndPoints(page, REAL_PRICE)
+  const discount =
+    price && realPrice && realPrice >= price ? realPrice - price : undefined
 
   const history = {
     scrapedAt,
-    price: await getPrice(page),
-    points: await getPoints(page),
-    pointsRate: await getPointsRate(page),
-    ...saving
+    price,
+    points,
+    pointsRate: rate(points, price),
+    discount,
+    discountRate: rate(discount, realPrice)
   }
 
   const item = {
@@ -89,6 +82,9 @@ export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
 }
 
 export const scrapeItem = async (url: string) => {
+  console.log('start scrapeUrl:' + url)
   const browser = await getBrowser()
-  return scrapeItemWishBrowser(browser, url)
+  const data = await scrapeItemWishBrowser(browser, url)
+  console.log('end scrapeUrl:' + url)
+  return data
 }
