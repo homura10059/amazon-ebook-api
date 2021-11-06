@@ -52,15 +52,21 @@ const rate = (denominntor?: number, numerator?: number) => {
   return Math.round((denominntor / numerator) * 100)
 }
 
+const calcDiscount = (price?: number, realPrice?: number) => {
+  if (!price || !realPrice) {
+    return undefined
+  }
+  const delta = realPrice - price
+  return delta < 0 ? undefined : delta
+}
+
 export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
   const page = await scrape(browser, url)
   const scrapedAt = getUnixTimeInSec(new Date(Date.now()))
 
   const { price, points } = await getPriceAndPoints(page, PRICE)
   const { price: realPrice } = await getPriceAndPoints(page, REAL_PRICE)
-  const discount =
-    price && realPrice && realPrice >= price ? realPrice - price : undefined
-
+  const discount = calcDiscount(price, realPrice)
   const history = {
     scrapedAt,
     price,

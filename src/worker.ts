@@ -7,7 +7,7 @@ import { queue } from './lib/queue'
 import { JobData } from './types/queue'
 
 const workers = process.env.WEB_CONCURRENCY || 2
-const maxJobsPerWorker = 10
+const maxJobsPerWorker = 2
 
 const worker = async (job: Bull.Job<JobData>) => {
   try {
