@@ -45,3 +45,11 @@ export const scanWishList = async (id: string) => {
     console.log(e)
   }
 }
+
+export const scanAllWishLists = async () => {
+  const { data: wishLists, error } = await supabase
+    .from<definitions['wishLists']>('wishLists')
+    .select('id')
+  if (error || wishLists === null) return
+  await Promise.all(wishLists.map(({ id }) => scanWishList(id)))
+}
