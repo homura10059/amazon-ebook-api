@@ -154,3 +154,11 @@ export const notify = async (id: string) => {
     })
   )
 }
+
+export const notifyAllUsers = async () => {
+  const { data, error } = await supabase.from<User>('users').select(`id`)
+  if (error || data === null) {
+    return
+  }
+  await Promise.all(data.map(d => notify(d.id)))
+}
