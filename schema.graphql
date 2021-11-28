@@ -8,6 +8,7 @@ type Mutation {
     scanAllItems: Queued
     scanWishList(id: String!): Queued
     scanAllWishLists: Queued
+    notify(userId: String!): Queued
 }
 
 type User {

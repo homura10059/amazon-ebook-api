@@ -216,6 +216,192 @@ export interface paths {
       };
     };
   };
+  "/notification": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.notification.id"];
+          userId?: parameters["rowFilter.notification.userId"];
+          serviceType?: parameters["rowFilter.notification.serviceType"];
+          webhookUrl?: parameters["rowFilter.notification.webhookUrl"];
+          memo?: parameters["rowFilter.notification.memo"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["notification"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** notification */
+          notification?: definitions["notification"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.notification.id"];
+          userId?: parameters["rowFilter.notification.userId"];
+          serviceType?: parameters["rowFilter.notification.serviceType"];
+          webhookUrl?: parameters["rowFilter.notification.webhookUrl"];
+          memo?: parameters["rowFilter.notification.memo"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.notification.id"];
+          userId?: parameters["rowFilter.notification.userId"];
+          serviceType?: parameters["rowFilter.notification.serviceType"];
+          webhookUrl?: parameters["rowFilter.notification.webhookUrl"];
+          memo?: parameters["rowFilter.notification.memo"];
+        };
+        body: {
+          /** notification */
+          notification?: definitions["notification"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/notificationService": {
+    get: {
+      parameters: {
+        query: {
+          type?: parameters["rowFilter.notificationService.type"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["notificationService"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** notificationService */
+          notificationService?: definitions["notificationService"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          type?: parameters["rowFilter.notificationService.type"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          type?: parameters["rowFilter.notificationService.type"];
+        };
+        body: {
+          /** notificationService */
+          notificationService?: definitions["notificationService"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/users": {
     get: {
       parameters: {
@@ -311,7 +497,7 @@ export interface paths {
       parameters: {
         query: {
           userId?: parameters["rowFilter.users_to_wishLists.userId"];
-          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+          wishListId?: parameters["rowFilter.users_to_wishLists.wishListId"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -363,7 +549,7 @@ export interface paths {
       parameters: {
         query: {
           userId?: parameters["rowFilter.users_to_wishLists.userId"];
-          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+          wishListId?: parameters["rowFilter.users_to_wishLists.wishListId"];
         };
         header: {
           /** Preference */
@@ -379,7 +565,7 @@ export interface paths {
       parameters: {
         query: {
           userId?: parameters["rowFilter.users_to_wishLists.userId"];
-          wishListsId?: parameters["rowFilter.users_to_wishLists.wishListsId"];
+          wishListId?: parameters["rowFilter.users_to_wishLists.wishListId"];
         };
         body: {
           /** users_to_wishLists */
@@ -630,6 +816,32 @@ export interface definitions {
     title?: string;
     scrapedAt?: number;
   };
+  notification: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: string;
+    /**
+     * Note:
+     * This is a Foreign Key to `users.id`.<fk table='users' column='id'/>
+     */
+    userId: string;
+    /**
+     * Note:
+     * This is a Foreign Key to `notificationService.type`.<fk table='notificationService' column='type'/>
+     */
+    serviceType?: string;
+    webhookUrl: string;
+    memo?: string;
+  };
+  notificationService: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    type: string;
+  };
   users: {
     /**
      * Note:
@@ -650,7 +862,7 @@ export interface definitions {
      * This is a Primary Key.<pk/>
      * This is a Foreign Key to `wishLists.id`.<fk table='wishLists' column='id'/>
      */
-    wishListsId: string;
+    wishListId: string;
   };
   wishLists: {
     /**
@@ -660,7 +872,7 @@ export interface definitions {
     id: string;
     url: string;
     scrapedAt?: number;
-    title: string;
+    title?: string;
   };
   wishLists_to_items: {
     /**
@@ -715,6 +927,16 @@ export interface parameters {
   "rowFilter.items.url": string;
   "rowFilter.items.title": string;
   "rowFilter.items.scrapedAt": string;
+  /** notification */
+  "body.notification": definitions["notification"];
+  "rowFilter.notification.id": string;
+  "rowFilter.notification.userId": string;
+  "rowFilter.notification.serviceType": string;
+  "rowFilter.notification.webhookUrl": string;
+  "rowFilter.notification.memo": string;
+  /** notificationService */
+  "body.notificationService": definitions["notificationService"];
+  "rowFilter.notificationService.type": string;
   /** users */
   "body.users": definitions["users"];
   "rowFilter.users.id": string;
@@ -722,7 +944,7 @@ export interface parameters {
   /** users_to_wishLists */
   "body.users_to_wishLists": definitions["users_to_wishLists"];
   "rowFilter.users_to_wishLists.userId": string;
-  "rowFilter.users_to_wishLists.wishListsId": string;
+  "rowFilter.users_to_wishLists.wishListId": string;
   /** wishLists */
   "body.wishLists": definitions["wishLists"];
   "rowFilter.wishLists.id": string;
