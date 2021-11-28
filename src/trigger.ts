@@ -1,21 +1,19 @@
-import { scanAllItems } from './domain/services/items'
-import { notifyAllUsers } from './domain/services/notifications'
-import { scanAllWishLists } from './domain/services/wishLists'
+import { queue } from './lib/queue'
 
 const main = async () => {
   const jobType = process.env.JOB_TYPE
   console.log(jobType)
   switch (jobType) {
     case 'ScanAllItems': {
-      await scanAllItems()
+      await queue.add({ type: 'ScanAllItems' })
       break
     }
     case 'ScanAllWishList': {
-      await scanAllWishLists()
+      await queue.add({ type: 'ScanAllWishLists' })
       break
     }
     case 'NotifyAllUsers': {
-      await notifyAllUsers()
+      await queue.add({ type: 'NotifyAllUsers' })
       break
     }
     default: {

@@ -2,8 +2,8 @@ import Bull from 'bull'
 import throng from 'throng'
 
 import { scanAllItems, scanItem } from './domain/services/items'
-import { notify } from './domain/services/notifications'
-import { scanWishList } from './domain/services/wishLists'
+import { notify, notifyAllUsers } from './domain/services/notifications'
+import { scanAllWishLists, scanWishList } from './domain/services/wishLists'
 import { queue } from './lib/queue'
 import { JobData } from './types/queue'
 
@@ -23,12 +23,20 @@ const worker = async (job: Bull.Job<JobData>) => {
         await scanAllItems()
         break
       }
+      case 'ScanAllWishLists': {
+        await scanAllWishLists()
+        break
+      }
       case 'ScanWishList': {
         await scanWishList(data.wishListId)
         break
       }
       case 'Notify': {
         await notify(data.userId)
+        break
+      }
+      case 'NotifyAllUsers': {
+        await notifyAllUsers()
         break
       }
       default: {
