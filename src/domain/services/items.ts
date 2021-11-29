@@ -1,3 +1,5 @@
+import url from 'url'
+
 import { queue } from '../../lib/queue'
 import { supabase } from '../../lib/supabase'
 import { definitions } from '../../types/supabase'
@@ -16,7 +18,9 @@ export const fetchItem = async (id: string): Promise<definitions['items']> => {
 }
 
 export const updateItem = async (item: { id: string; url: string }) => {
-  const scraped = await scrapeItem(item.url)
+  const url = new URL(item.url)
+  url.searchParams.append('language', 'ja_JP')
+  const scraped = await scrapeItem(url.toString())
 
   await supabase
     .from<definitions['items']>('items')
