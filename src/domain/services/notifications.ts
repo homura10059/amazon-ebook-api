@@ -72,38 +72,66 @@ const getUser = async (id: string) => {
   return data ? data[0] : null
 }
 
-const color = {
+const COLOR = {
   red: parseInt('ff0000', 16),
   yellow: parseInt('ffff00', 16),
   green: parseInt('008000', 16),
   gray: parseInt('808080', 16)
+} as const
+
+const convertColorFrom = (
+  history: definitions['itemHistories'],
+  discountRateThreshold = 20,
+  pointsRateThreshold = 20
+): number => {
+  const dRate = history.discountRate ?? 0
+  const pRate = history.pointsRate ?? 0
+  if (!(dRate >= discountRateThreshold || pRate >= pointsRateThreshold)) {
+    return COLOR.gray
+  }
+
+  if (dRate >= 35 || pRate >= 35) {
+    return COLOR.red
+  }
+
+  if (dRate >= 30 || pRate >= 30) {
+    return COLOR.yellow
+  }
+
+  return COLOR.green
 }
 
 const convertEmbedsFrom = (
   item: Item,
   history: definitions['itemHistories']
-): discord.Embed => ({
-  title: `${item.title}`,
-  url: `${item.url}`,
-  color: color.green,
-  fields: [
-    {
-      name: '金額',
-      value: history.price ? `¥${history.price}` : '----',
-      inline: true
-    },
-    {
-      name: '値引き率',
-      value: history.discountRate ? `${history.discountRate}%` : '----',
-      inline: true
-    },
-    {
-      name: 'ポイント還元率',
-      value: history.pointsRate ? `${history.pointsRate}%` : '----',
-      inline: true
-    }
-  ]
-})
+): discord.Embed | null => {
+  const color = convertColorFrom(history)
+  if (color === COLOR.gray) return null
+
+  return {
+    title: `${item.title}`,
+    url: `${item.url}`,
+    color: color,
+    fields: [
+      {
+        name: '金額',
+        value: history.price ? `¥${history.price}` : '----',
+        inline: true
+      },
+      {
+        name: '値引き率',
+        value: history.discountRate ? `${history.discountRate}%` : '----',
+        inline: true
+      },
+      {
+        name: 'ポイント還元率',
+        value: history.pointsRate ? `${history.pointsRate}%` : '----',
+        inline: true
+      }
+    ]
+  }
+}
+
 const Millis_14Days = 14 * 24 * 60 * 60 * 1000
 const createEmbed = async (item: Item): Promise<discord.Embed | null> => {
   const { data, error } = await supabase
@@ -117,12 +145,7 @@ const createEmbed = async (item: Item): Promise<discord.Embed | null> => {
   const sorted = data.sort((a, b) => b.scrapedAt - a.scrapedAt)
 
   const latest = sorted[0]
-  if ((latest.discountRate ?? 0) > 20 || (latest.pointsRate ?? 0) > 20) {
-    console.log(latest)
-    return convertEmbedsFrom(item, latest)
-  }
-
-  return null
+  return convertEmbedsFrom(item, latest)
 }
 
 export const notify = async (id: string) => {
