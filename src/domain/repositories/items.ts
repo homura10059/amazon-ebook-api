@@ -45,6 +45,13 @@ const getPriceAndPoints = async (page: Page, xpath: string) => {
   }
 }
 
+const getRealPrice = async (page: Page) => {
+  const priceStr = await getText(page, REAL_PRICE).catch(_e => undefined)
+  if (priceStr === undefined) return undefined
+  const price = priceRegex.exec(priceStr)
+  return convertRegExpExecArrayToNumber(price)
+}
+
 const rate = (denominntor?: number, numerator?: number) => {
   if (!denominntor || !numerator) {
     return undefined
@@ -65,7 +72,7 @@ export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
   const scrapedAt = getUnixTimeInSec(new Date(Date.now()))
 
   const { price, points } = await getPriceAndPoints(page, PRICE)
-  const { price: realPrice } = await getPriceAndPoints(page, REAL_PRICE)
+  const realPrice = await getRealPrice(page)
   const discount = calcDiscount(price, realPrice)
   const history = {
     scrapedAt,

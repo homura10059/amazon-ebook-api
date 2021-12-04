@@ -1,5 +1,4 @@
-import url from 'url'
-
+import { notifyError } from '../../lib/discord'
 import { queue } from '../../lib/queue'
 import { supabase } from '../../lib/supabase'
 import { definitions } from '../../types/supabase'
@@ -27,9 +26,13 @@ export const updateItem = async (item: { id: string; url: string }) => {
     .update({ title: scraped.title, scrapedAt: scraped.scrapedAt })
     .eq('id', item.id)
 
-  await supabase
-    .from<definitions['itemHistories']>('itemHistories')
-    .insert([{ itemId: item.id, ...scraped.history }])
+  if (Object.values(scraped.history).every(x => x === undefined)) {
+    await notifyError(new Error(`all value is undefined on ${item.url}`))
+  } else {
+    await supabase
+      .from<definitions['itemHistories']>('itemHistories')
+      .insert([{ itemId: item.id, ...scraped.history }])
+  }
 }
 
 export const scanItem = async (id: string) => {
