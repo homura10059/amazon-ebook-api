@@ -1,3 +1,5 @@
+import got from 'got'
+
 import { queue } from './lib/queue'
 
 const main = async () => {
@@ -14,6 +16,15 @@ const main = async () => {
     }
     case 'NotifyAllUsers': {
       await queue.add({ type: 'NotifyAllUsers' })
+      break
+    }
+    case 'WakeUp': {
+      const port = process.env.PORT || '3000'
+      const url =
+        port === '3000'
+          ? `http://localhost:${port}/`
+          : `https://amazon-ebook-api.herokuapp.com/`
+      await got.get(url)
       break
     }
     default: {
