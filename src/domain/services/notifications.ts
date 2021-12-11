@@ -1,3 +1,6 @@
+import format from 'date-fns/format'
+import { ja } from 'date-fns/locale'
+
 import { sliceByNumber } from '../../lib/arrays'
 import { getUnixTimeNow } from '../../lib/dates'
 import * as discord from '../../lib/discord'
@@ -126,6 +129,15 @@ const convertEmbedsFrom = (
       {
         name: 'ポイント還元率',
         value: history.pointsRate ? `${history.pointsRate}%` : '----',
+        inline: true
+      },
+      {
+        name: '更新日',
+        value: format(
+          new Date(history.scrapedAt * 1000),
+          'yyyy/MM/dd HH:mm:ss',
+          { locale: ja }
+        ),
         inline: true
       }
     ]
