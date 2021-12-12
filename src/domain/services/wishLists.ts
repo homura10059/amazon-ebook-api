@@ -34,6 +34,11 @@ export const updateWishList = async (wishList: { id: string; url: string }) => {
 
   await supabase
     .from<definitions['wishLists_to_items']>('wishLists_to_items')
+    .delete()
+    .eq('wishListId', wishList.id)
+
+  await supabase
+    .from<definitions['wishLists_to_items']>('wishLists_to_items')
     .upsert(items.map(item => ({ wishListId: wishList.id, itemId: item.id })))
 }
 
