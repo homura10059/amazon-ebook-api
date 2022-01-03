@@ -26,7 +26,10 @@ export const updateWishList = async (wishList: { id: string; url: string }) => {
 
   const { data: items, error } = await supabase
     .from<definitions['items']>('items')
-    .upsert(scraped.itemUrlList.map(url => ({ url })))
+    .upsert(
+      scraped.itemUrlList.map(url => ({ url })),
+      { onConflict: 'url', ignoreDuplicates: true }
+    )
 
   if (error || !items) {
     return
