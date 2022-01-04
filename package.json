@@ -16,6 +16,7 @@
     "trigger:scanAllWishList": "env JOB_TYPE=ScanAllWishList node dist/trigger.js",
     "trigger:scanAllItems": "env JOB_TYPE=ScanAllItems node dist/trigger.js",
     "trigger:notifyAllUsers": "env JOB_TYPE=NotifyAllUsers node dist/trigger.js",
+    "trigger:deleteNoRelationItem": "env JOB_TYPE=DeleteNoRelationItem node dist/trigger.js",
     "trigger:wakeUp": "env JOB_TYPE=WakeUp node dist/trigger.js",
     "format": "prettier --write $PWD/'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*.{js,ts}'",

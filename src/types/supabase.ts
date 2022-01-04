@@ -128,6 +128,7 @@ export interface paths {
           url?: parameters["rowFilter.items.url"];
           title?: parameters["rowFilter.items.title"];
           scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+          thumbnailUrl?: parameters["rowFilter.items.thumbnailUrl"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -182,6 +183,7 @@ export interface paths {
           url?: parameters["rowFilter.items.url"];
           title?: parameters["rowFilter.items.title"];
           scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+          thumbnailUrl?: parameters["rowFilter.items.thumbnailUrl"];
         };
         header: {
           /** Preference */
@@ -200,6 +202,7 @@ export interface paths {
           url?: parameters["rowFilter.items.url"];
           title?: parameters["rowFilter.items.title"];
           scrapedAt?: parameters["rowFilter.items.scrapedAt"];
+          thumbnailUrl?: parameters["rowFilter.items.thumbnailUrl"];
         };
         body: {
           /** items */
@@ -815,6 +818,7 @@ export interface definitions {
     url: string;
     title?: string;
     scrapedAt?: number;
+    thumbnailUrl?: string;
   };
   notification: {
     /**
@@ -927,6 +931,7 @@ export interface parameters {
   "rowFilter.items.url": string;
   "rowFilter.items.title": string;
   "rowFilter.items.scrapedAt": string;
+  "rowFilter.items.thumbnailUrl": string;
   /** notification */
   "body.notification": definitions["notification"];
   "rowFilter.notification.id": string;

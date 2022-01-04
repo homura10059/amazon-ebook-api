@@ -1,8 +1,8 @@
 import { Browser, Page } from 'puppeteer'
 
 import { getUnixTimeInSec } from '../../lib/dates'
-import { getBrowser, getText, scrape } from '../../lib/scraper'
-import { PRICE, REAL_PRICE, TITLE } from '../models/selector'
+import { getBrowser, getImageUrl, getText, scrape } from '../../lib/scraper'
+import { PRICE, REAL_PRICE, THUMBNAIL, TITLE } from '../models/selector'
 
 const priceRegex = /\d{1,3}(,\d{3})*/
 const pointsRegex = /\d{1,3}(,\d{3})*pt/
@@ -73,6 +73,7 @@ export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
 
   const { price, points } = await getPriceAndPoints(page, PRICE)
   const realPrice = await getRealPrice(page)
+  const thumbnailUrl = await getImageUrl(page, THUMBNAIL)
   const discount = calcDiscount(price, realPrice)
   const history = {
     scrapedAt,
@@ -87,6 +88,7 @@ export const scrapeItemWishBrowser = async (browser: Browser, url: string) => {
     url,
     title: await getText(page, TITLE),
     scrapedAt,
+    thumbnailUrl,
     history
   }
   await page.close()

@@ -1,14 +1,6 @@
-type ScanAllItems = {
-  type: 'ScanAllItems'
-}
-
 type ScanItem = {
   type: 'ScanItem'
   itemId: string
-}
-
-type ScanAllWishLists = {
-  type: 'ScanAllWishLists'
 }
 
 type ScanWishList = {
@@ -21,15 +13,14 @@ type Notify = {
   userId: string
 }
 
-type NotifyAllUsers = {
-  type: 'NotifyAllUsers'
+const simpleJobType = [
+  'DeleteNoRelationItem',
+  'NotifyAllUsers',
+  'ScanAllItems',
+  'ScanAllWishLists'
+] as const
+type SimpleJob = {
+  type: typeof simpleJobType[number]
 }
-
-export type JobData =
-  | ScanAllItems
-  | ScanItem
-  | ScanAllWishLists
-  | ScanWishList
-  | Notify
-  | NotifyAllUsers
+export type JobData = ScanItem | ScanWishList | Notify | SimpleJob
 export type JobType = Pick<JobData, 'type'>['type']

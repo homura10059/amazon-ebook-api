@@ -23,7 +23,11 @@ export const updateItem = async (item: { id: string; url: string }) => {
 
   await supabase
     .from<definitions['items']>('items')
-    .update({ title: scraped.title, scrapedAt: scraped.scrapedAt })
+    .update({
+      title: scraped.title,
+      scrapedAt: scraped.scrapedAt,
+      thumbnailUrl: scraped.thumbnailUrl
+    })
     .eq('id', item.id)
 
   if (Object.values(scraped.history).every(x => x === undefined)) {
@@ -57,4 +61,30 @@ export const scanAllItems = async () => {
   await Promise.allSettled(
     items.map(item => queue.add({ type: 'ScanItem', itemId: item.id }))
   )
+}
+
+type Item2WishList = definitions['items'] & {
+  wishLists_to_items: definitions['wishLists_to_items'][]
+}
+export const deleteNoRelationItem = async () => {
+  console.log('deleteNoRelationItem')
+  const { data: items, error } = await supabase
+    .from<Item2WishList>('items')
+    .select('*, wishLists_to_items(*)')
+
+  if (error || !items) {
+    throw error
+  }
+
+  const deleteTarget = items.filter(
+    item => item.wishLists_to_items.length === 0
+  )
+
+  await supabase
+    .from<definitions['items']>('items')
+    .delete()
+    .in(
+      'id',
+      deleteTarget.map(item => item.id)
+    )
 }

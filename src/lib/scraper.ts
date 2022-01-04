@@ -31,6 +31,14 @@ export const getText = async (
   return title ? title.trim() : ''
 }
 
+export const getImageUrl = async (
+  page: Page,
+  selector: string
+): Promise<string | undefined> => {
+  const src = await page.$eval(selector, element => element.getAttribute('src'))
+  return src ? src : undefined
+}
+
 export const getHrefList = async (
   page: Page,
   selector: string

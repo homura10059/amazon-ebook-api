@@ -18,6 +18,10 @@ const main = async () => {
       await queue.add({ type: 'NotifyAllUsers' })
       break
     }
+    case 'DeleteNoRelationItem': {
+      await queue.add({ type: 'DeleteNoRelationItem' })
+      break
+    }
     case 'WakeUp': {
       const port = process.env.PORT || '3000'
       const url =
@@ -28,7 +32,7 @@ const main = async () => {
       break
     }
     default: {
-      console.log(jobType)
+      console.log(`undefined jobType : ${jobType}`)
       break
     }
   }
